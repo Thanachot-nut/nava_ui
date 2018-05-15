@@ -1,0 +1,222 @@
+ <!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Issue Form</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+</head>
+
+<body >
+   <div id="formbox" style="padding-top: 5px;" class=" col-md-4 col-md-offset-4 " bac>
+    <div class="panel panel-info">
+        <div class="panel-heading " align="center">
+            <div align="center">
+                <!-- <img src="../static/img/navavending.png" width="200px" height="70px"> -->
+            </div>
+
+            <h2 style="color: red;font-weight: bold;">ระบบแจ้งปัญหา <span style="color: white;background-color: gray; width: 120px"> A-0033</span></h2>
+
+            <h3 style="color: red;">กรุณาเลือกภาษาที่ต้องการ</h2>
+                <h3 style="color: red;">(Please select your language) </h3>
+            <div class="form-group">
+                <div class="col-md-12 control" style="margin-top:2px">
+                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" align="center">
+            <div style="padding-top: 5px;">
+                <span style="cursor: pointer;">
+                    <a href="/issue/new/th/{{ . }}">
+                        <button type="button" style="border: 0; background-color: white;" data-toggle="tooltip" data-placement="center" title="Thailand">
+                            <img src="../static/img/thailand.png" width="110px" height="90px">
+                        </button>
+                    </a>
+                </span>
+            </div>
+            <div style="padding-top: 15px;">
+                <span style="cursor: pointer;" onclick="getLocation()"> 
+                    <a href="/issue/new/zh/{{ . }}">
+                    <button type="button" style="border: 0; background-color: white;" data-toggle="tooltip" data-placement="center" title="China">
+                        <img src="../static/img/china.png" width="110px" height="90px">
+                    </button>
+                </a>
+                </span>
+            </div>
+            <div style="padding-top: 15px;">
+                <span style="cursor: pointer;" onclick="getLocation()"> 
+                    <a href="/issue/new/en/{{ . }}">
+                    <button type="button" style="border: 0; background-color: white;" data-toggle="tooltip" data-placement="center" title="United Kingdom">
+                        <img src="../static/img/unitedkingdom.png" width="110px" height="90px">
+                    </button>
+                </a>
+                </span>
+            </div>
+        </div>
+        <div class="panel-footer panel-info" align="center">
+            <h3 style="color: red;">ติดต่อศูนย์บริการ โทร 088-547-9988</h3>
+           </div>
+    </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script defer src="/static/font-awesome/js/fontawesome-all.js">
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style type="text/css">
+@font-face {
+    font-family: androidfont;
+    src: url('$font-family-base');
+}
+
+
+h2,
+label,
+input,
+textarea,
+select,
+button {
+    font-family: Kanit;
+    font-size: 20px;
+}
+
+h1 {
+    font-family: Kanit;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+h3{
+     font-family: Kanit;
+    font-size: 16px;
+}
+
+
+/*  body{
+       font-family: 'Kanit', sans-serif;
+
+    }*/
+    .notshow{
+    display: display;
+   }
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+    
+  }
+</style>
+<script type="text/javascript">
+// $(document).ready(function() {
+function because() {
+
+    // var x = document.getElementById("latitudez").value;
+    // var y = document.getElementById("longitudez").value;
+
+    // if (x == '' || y == '') {
+
+    //     swal("Error!", "Click find Your location!", "error");
+        
+    // }
+
+
+}
+    
+
+function getLocationmy() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(myFunction , showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function myFunction(position) {
+    document.getElementById("latitudez").value = position.coords.latitude;
+    document.getElementById("longitudez").value = position.coords.longitude;
+    // console.log('myFunction'+ position.coords.latitude);
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+
+    function clearpic (){
+      document.getElementById('files').value = '';
+      $('.thumb').parent().remove();
+   
+
+
+        // .thumbnail').parent().remove();
+
+    }
+
+
+  function handleFileSelect(evt) {
+
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+
+  }
+   
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+
+</html>
+
+
+
+
+
+ 

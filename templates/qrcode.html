@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="numeral.min.js"></script>
+    <title>ทดสอบการ การ GenQRCODE</title>
+</head>
+
+<body>
+    <div class="d-print-none">
+        <input type="text" id="ipr" value="192.168.0.97" hidden>
+        <input type="text" id="portr" value="8080" hidden> ตัวอักษร :
+        <input type="text" onkeyup="cal()" id="code" value="" placeholder="ตัวอักษร ตัวอย่าง A"> เริ่มต้น :
+        <input type="text" onkeyup="cal()" id="first" value="" placeholder="ค่าเริ่มต้น
+    ตัวอย่าง 1"> ค่าสุดท้าย :
+        <input type="text" onkeyup="cal()" id="end" value="" placeholder="ค่าสุดท้าย ตัวอย่าง 100">
+        <button onclick="cal()" class="btn btn-success" style="cursor: pointer;">ตกลง</button>
+        ผลลัพธ์ :
+        <input type="text" id="result" style="background-color: gray; color: white; " readonly name="">
+        <button onclick="" class="btn btn-outline-info" data-toggle="modal" data-target="#modalsetting" style="border: 1; cursor: pointer;">
+            <img src="img/settings.png" width="25px" height="25px">
+        </button>
+        <button onclick="printwindow()" class="btn btn-outline-info" style="border: 1; cursor: pointer;">
+            <img src="img/print.png" width="25px" height="25px">
+        </button>
+    </div>
+    <!-- แสดงข้อมูลนะพพพ -->
+    <div id="detailprint">
+        <!-- แสดงข้อมูลนะพพพ -->
+    <!--  <div class="row">
+    <div id="formbox"  class="mainbox col-sm-4 col-sm-offset-2 col-sm-5 col-sm-offset-2">
+      <div class="card card-danger">
+       <div class="card-heading " align="center">
+        <h1 style="color: red;">แจ้งปัญหาการใช้งาน  </h1>
+        <div class="form-group">
+        <div class="col-md-12 control"  style="margin-top:2px">
+       <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+        </div> </div> </div> </div>
+       <div class="card-body"  align="center">
+       <h1>ตรงนี้รูปนะ</h1>
+        <h1> 001</h1>
+       </div>
+        <div class="card-footer panel-danger"  align="center"><h4>ติดต่อศูนย์บริการ</h4>
+       <h4>โทร .08-4388-9108</h4>
+   </div>
+</div>
+</div>
+ 
+</div> -->
+        <!-- Modal Setting -->
+        <div class="modal fade" id="modalsetting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="exampleModalLabel">เซ็ตค่าเซิฟเวอร์</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        IP:
+                        <input type="text" class="form-control" id="URLmodal" name=""> Port:
+                        <input type="text" class="form-control" id="PortURL" name="">
+                        <br> Result:
+                        <input type="text" readonly class="form-control" id="resultmodal" name="">
+                    </div>
+                    <div class="modal-footer">
+                        <div align="center">
+                            <button class="btn btn-success" onclick="settingsubmit()"> ตกลง</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Setting -->
+</body>
+
+</html>
+<style type="text/css">
+img {
+    display: inline;
+}
+</style>
+<script type="text/javascript">
+function printwindow() {
+    window.print();
+}
+$(document).ready(function() {
+    document.getElementById("code").focus();
+    // console.log('value '+document.getElementById('ipr').value)
+    document.getElementById('URLmodal').value = document.getElementById('ipr').value
+    document.getElementById('PortURL').value = document.getElementById('portr').value
+
+    var result = document.getElementById('ipr').value + ':' + document.getElementById('portr').value;
+
+    document.getElementById('resultmodal').value = result;
+
+});
+
+function settingsubmit() {
+    var URLmodalz = document.getElementById('URLmodal').value
+    var PORTmodalz = document.getElementById('PortURL').value
+
+    document.getElementById("resultmodal").value = document.getElementById("URLmodal").value + ':' + document.getElementById("PortURL").value
+
+
+    document.getElementById('ipr').value = URLmodalz;
+    document.getElementById('portr').value = PORTmodalz;
+    alert('บันทึกสำเร็จ');
+    $('#modalsetting').modal('hide');
+
+}
+
+function cal() {
+    var URL = document.getElementById('ipr').value
+    var PORT = document.getElementById('portr').value
+
+
+    var codeB = document.getElementById('code').value
+    // var parent = document.getElementById('images')
+    // var imagePath = 'http://www.placehold.it/405x100'
+    var firstnumber = document.getElementById('first').value //ex 1
+    var lastnumber = document.getElementById('end').value
+    var codex = document.getElementById('code').value
+
+    var x = changenum(firstnumber);
+    var b = changenum(lastnumber);
+    // document.getElementById('images').innerHTML = ''
+    console.log(x + ' ' + b);
+    document.getElementById('result').value = codeB + x + ' - ' + codeB + b
+    // ex 50
+    // console.log(getnumber);
+    var size = '250x250';
+    var content = "";
+    var img;
+    for (x; x <= changenum(b); x++) {
+        // console.log(getnumber);
+        img = new Image();
+        logo = new Image();
+        logo.src = "../static/img/navavending.png";
+        // img.src = 'http://www.placehold.it/'+test2+'x'+ test;
+        img.src = "http://chart.apis.google.com/chart?cht=qr&choe=UTF-8&chs=" + size + "&chld=L&chl=http://" + URL + ":" + PORT + "/issue/" + codeB + changenum(x);
+        var logo = logo.src
+        var image = img.src
+        content += '<div id="formbox" style="display:inline-block;"  class="mainbox col-sm-4 >';
+        content += '<div class="card">';
+        content += '<div class="card-heading" align="center">';
+        content += '<img width="180px" height="80px" src="' + logo + '" alt="my image"> ';
+        content += '<h3 style="color:red; font-weight:bold;">แจ้งปัญหาการใช้งาน  </h3>';
+        content += '<div class="form-group">';
+        content += '<div class="col-md-12 control"  style="margin-top:2px">';
+        content += '<div style="border-top: 1px solid#888; font-size:85%">';
+        content += '</div> </div> </div> </div>';
+        content += '<div class="card-body"  align="center">';
+        content += "<img src='" + image + "' alt='my image'>";
+        content += "<h1 style='font-size:25px;font-weight:bold;'>Machine Code : " + codeB + changenum(x) + "</h1>";
+        content += '</div>'
+        content += '<div class="card-footer card-danger"  align="center"><h4>ติดต่อศูนย์บริการ</h4>';
+        content += '<h4>โทร .08-4388-9108</h4></div>';
+        content += '</div>';
+        // parent.appendChild(img);
+
+    }
+
+    document.getElementById("detailprint").innerHTML = content
+}
+
+function changenum(x) {
+    var string = numeral(x).format('0000');
+    return string;
+}
+</script>

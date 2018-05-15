@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Issue Form</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+</head>
+
+<body >
+    <!-- <div class="container">
+    <div id="formbox" style="
+width: 380px;
+height: 40px;
+margin: 2% auto; /* Will not center vertically and won't work in IE6/7. */
+left: 0;
+right: 0;"> -->
+<div id="formbox" style="padding-top: 5px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2" bac>
+    <div class="panel panel-info border-success mb-3">
+        <div class="panel-heading border-success mb-3">
+            <div class="panel-title">
+                <div class="input-group">
+                    <span class="input-group-prepend">
+                        <h1>
+                            <img src="../static/img/clipboard.png" width="40px" height="40px">
+                    </span> แจ้งปัญหา A-0001</br>
+                    <h1 align="center" style="color: darkblue;font-weight: bold;">
+                        <span style="color: white;background-color: gray; width: 120px"></span>
+                    </h1>
+                    </h1>
+                </div>
+            </div>
+            <!--   <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div> -->
+        </div>
+        <div class="panel-body">
+
+            <!--             <form enctype="multipart/form-data" action="/issue/save" method="POST">
+                <input type="file" name="upload" /> <input type="hidden"
+                    name="token" value="{{.}}" /> <input type="submit" value="upload" />
+                </form> -->
+
+            <form id="issue" enctype="multipart/form-data" action="/issue/save" method="POST" class="form-group">
+
+                <input type="hidden" name="lang" value="th">
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                <h2> กรุณาระบุปัญหา</h2>
+                <div class="input-group">
+                    <select name="issue_types" class="selectpicker" multiple data-selected-text-format="count > 4">
+                        <option value=1>1. ตู้กินเงิน/ไม่ได้รับสินค้า</option>
+                        <option value=2>2. ตู้ไม่รับเงิน</option>
+                        <option value=3>3. สินค้าหมด</option>
+                        <option value=4>4. สินค้ามีปัญหา</option>
+                        <option value=5>5. ตู้เสีย</option>
+                        <option value=0>0. อื่นๆ</option>
+                    </select>
+                </div>
+                <h2>ชื่อของคุณ</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="far fa-user"></i>
+                    </span>
+                    <input id="name" type="text" class="form-control" name="person" placeholder="ชื่อ">
+                </div>
+                <h2>เบอร์โทรศัพท์</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fas fa-phone-volume"></i>
+                    </span>
+                    <input id="callback" type="text" class="form-control" name="phone" placeholder="เบอร์โทรศัพท์ติดต่อกลับ">
+                </div>
+                <h2>อีเมลล์</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fas fa-at"></i>
+                    </span>
+                    <input id="Email" type="text" class="form-control" name="email" placeholder="E-mail">
+                </div>
+                <h2>รายละเอียดของปัญหา</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                    <textarea take-focus="" type="text" class="form-control" name="comment" placeholder="รายละเอียดของปัญหา"></textarea>
+                </div>
+
+
+                <div style="padding-top: 20px">
+                    <input type="file" id="files" name="image_url" multiple class="form-control" onclick="clearpic()" />
+                    <input type="hidden" name="machine_code" value="{{.}}" />
+                </div>
+                <output id="list"></output>
+
+                <div class="notshow" style="padding-top: 20px">
+                    <button type="button" class="form-control btn-warning " onclick="clearpic()">ลบรูป</button>
+                </div>
+
+
+                <div style="padding-top: 20px;">
+                    <button class="form-control btn-primary" type="button" onclick="getLocationmy()">ระบุพิกัดของตู้</button>
+                </div>
+                <h2>Latitude :</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fas fa-location-arrow"></i>
+                    </span>
+                    <input id="latitudez" type="text" class="form-control" readonly name="lat" placeholder="Latitude">
+                </div>
+                <h2>Longitude :</h2>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="far fa-compass"></i>
+                    </span>
+                    <input id="longitudez" readonly type="text" class="form-control" name="long" placeholder="Longitude">
+                </div>
+                <div style="margin-top:10px" class="form-group">
+                    <!-- Button -->
+                    <div class="col-sm-12 controls" align="center">
+                        <input type="submit" onclick="because()" value="Send data" class="btn btn-primary" />
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-12 control" style="margin-top:10px">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                           
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script defer src="../static/font-awesome/js/fontawesome-all.js">
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style type="text/css">
+@font-face {
+    font-family: androidfont;
+    src: url('$font-family-base');
+}
+
+
+h2,
+label,
+input,
+textarea,
+select,
+button {
+    font-family: Kanit;
+    font-size: 20px;
+}
+
+h1 {
+    font-family: Kanit;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+h3{
+     font-family: Kanit;
+    font-size: 16px;
+}
+
+
+/*  body{
+       font-family: 'Kanit', sans-serif;
+
+    }*/
+    .notshow{
+    display: display;
+   }
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+    
+  }
+</style>
+<script type="text/javascript">
+// $(document).ready(function() {
+function because() {
+
+    // var x = document.getElementById("latitudez").value;
+    // var y = document.getElementById("longitudez").value;
+
+    // if (x == '' || y == '') {
+
+    //     swal("Error!", "Click find Your location!", "error");
+        
+    // }
+
+
+}
+    
+
+function getLocationmy() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(myFunction , showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function myFunction(position) {
+    document.getElementById("latitudez").value = position.coords.latitude;
+    document.getElementById("longitudez").value = position.coords.longitude;
+    // console.log('myFunction'+ position.coords.latitude);
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+
+    function clearpic (){
+      document.getElementById('files').value = '';
+      $('.thumb').parent().remove();
+   
+
+
+        // .thumbnail').parent().remove();
+
+    }
+
+
+  function handleFileSelect(evt) {
+
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+
+  }
+   
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+
+</html>
